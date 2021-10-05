@@ -1,7 +1,13 @@
-FROM node:14.17.4-alpine
+FROM node:14.17.4-alpine AS node
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y \
-    git \
-    angular-cli 
+COPY ./app/package*.json /app/
+
+COPY ./app /app
+
+RUN npm install
+
+EXPOSE 4200
+
+CMD ["npm", "start"]
